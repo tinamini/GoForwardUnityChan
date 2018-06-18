@@ -34,22 +34,34 @@ public class CubeController : MonoBehaviour
 	/// <summary>
 	/// Use this for initialization
 	/// </summary>
-	void Start ()
+	void Start()
 	{
-		
+
 	}
 
 	/// <summary>
 	/// Update is called once per frame
 	/// </summary>
-	void Update ()
+	void Update()
 	{
 		// キューブ移動
 		transform.Translate(this.Speed, 0, 0);
 
-		if(transform.position.x < this.DeadLine)
+		if (transform.position.x < this.DeadLine)
 		{
 			Destroy(gameObject);
+		}
+	}
+
+	/// <summary>
+	/// 衝突判定処理
+	/// </summary>
+	/// <param name="collision"></param>
+	private void OnCollisionEnter2D(Collision2D collision)
+	{
+		if (collision.gameObject.tag != "UnityChan")
+		{
+			GetComponent<AudioSource>().Play();
 		}
 	}
 	#endregion
