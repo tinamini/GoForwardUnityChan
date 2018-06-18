@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 
@@ -44,13 +45,13 @@ public class UIController : MonoBehaviour
 	/// </summary>
 	void Awake()
 	{
-		
+
 	}
 
 	/// <summary>
 	/// Use this for initialization
 	/// </summary>
-	void Start ()
+	void Start()
 	{
 		this.GameOverText = GameObject.Find("GameOver");
 		this.RunLengthText = GameObject.Find("RunLength");
@@ -59,9 +60,13 @@ public class UIController : MonoBehaviour
 	/// <summary>
 	/// Update is called once per frame
 	/// </summary>
-	void Update ()
+	void Update()
 	{
-		if (!this.IsGameOver)
+		if (this.IsGameOver)
+		{
+			this.SceneChange();
+		}
+		else
 		{
 			this.Length += this.Speed; // 走行距離更新
 			this.RunLengthText.GetComponent<Text>().text = "Distance: " + Length.ToString("F2") + "m"; // 走行距離表示
@@ -75,6 +80,17 @@ public class UIController : MonoBehaviour
 	{
 		this.GameOverText.GetComponent<Text>().text = "GameOver";
 		this.IsGameOver = true;
+	}
+
+	/// <summary>
+	/// シーンチェンジ処理
+	/// </summary>
+	private void SceneChange()
+	{
+		if (Input.GetMouseButtonDown(0))
+		{
+			SceneManager.LoadScene("GameScene");
+		}
 	}
 	#endregion
 }
