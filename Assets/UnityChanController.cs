@@ -34,7 +34,12 @@ public class UnityChanController : MonoBehaviour
 	/// <summary>
 	/// ジャンプ速度
 	/// </summary>
-	public float JumpVelocity { get; private set; } = 60f;
+	public float JumpVelocity { get; private set; } = 80f;
+
+	/// <summary>
+	/// ゲームオーバー位置
+	/// </summary>
+	public float DeadLine { get; private set; } = -9f;
 	#endregion
 
 	#region Methods
@@ -75,6 +80,12 @@ public class UnityChanController : MonoBehaviour
 			{
 				this.Rigidbody2D.velocity *= this.DumpSpeed;
 			}
+		}
+
+		if (transform.position.x < this.DeadLine)
+		{
+			GameObject.Find("Canvas").GetComponent<UIController>().GameOver();
+			Destroy(this.gameObject);
 		}
 	}
 	#endregion
